@@ -1,0 +1,46 @@
+infrastructure/api-docs/blueprint/groups/blocks.apib
+ + pagination (PaginationFromHash, required)
+            + list (array[Transaction.InBlock], required)
+        + error (Error, required, nullable)
+ };
+
+        transaction.commit().await?;
+        metrics::histogram!("sql.chain.operations_ext.tx_data_api_v02", start.elapsed());
+        Ok(result)
+    }
+    pub async fn tx_data_api_v02(&mut self, hash: &[u8]) -> QueryResult<Option<TxData>> {
+        let start = Instant::now();
+        let mut transaction = self.0.start_transaction().await?;
+ };
+
+        transaction.commit().await?;
+        metrics::histogram!(
+            "sql.chain.operations_ext.tx_data_by_block_and_index_api_v02",
+            start.elapsed()
+        );
+        Ok(result)
+    }
+
+    pub async fn tx_data_api_v02(&mut self, hash: &[u8]) -> QueryResult<Option<TxData>> {
+        let start = Instant::now();
+        let mut transaction = self.0.start_transaction().await?;
+  + pagination (PaginationFromHash, required)
+            + list (array[Transaction.InBlock], required)
+        + error (Error, required, nullable)
+
+## api/v0.2/blocks/blockNumber/transactions/blockIndex [/blocks/{blockNumber}/transactions/{blockIndex}]
+
++ Parameters
+    + `blockNumber`: 1 (required, BlockNumber) - An integer block number
+    + `blockIndex`: 0 (required, BlockIndex) - An integer index tx in block
+
+### Get transaction in block [GET]
+Get transaction in block
+
++ Response 200 (application/json)
+    + Attributes
+        + request (Request, required)
+        + status: success (string, required)
+        + result (object, required{{isResultNullable}})
+            + Transaction.InBlock
+        + error (Error, required, nullable)
